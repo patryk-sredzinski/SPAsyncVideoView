@@ -303,11 +303,15 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 
                 [displayLayer enqueueSampleBuffer:sampleBuffer];
 
-                CFRelease(sampleBuffer);
-
                 if (isFirstFrame && [weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFirstFrame:)]) {
                     [weakSelf.delegate asyncVideoViewDidRenderFirstFrame:weakSelf];
                 }
+                
+                if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFrame:timestamp:)]) {
+                    [weakSelf.delegate asyncVideoViewDidRenderFrame:weakSelf timestamp:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)];
+                }
+                
+                CFRelease(sampleBuffer);
 
                 if (isFirstFrame) {
                     [weakSelf setOverlayHidden:YES];
@@ -338,6 +342,16 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
             }
         }];
     });
+}
+
+- (void)updateLayerTransformation:(SPAsyncVideoReader *)asyncVideoReader {
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [CATransaction setAnimationDuration:0];
+    [self.displayLayer setAffineTransform:asyncVideoReader.assetPrefferedTransform];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+    [CATransaction commit];
 }
 
 - (void)notifyDelegateAboutError:(nonnull NSError *)error {
@@ -372,10 +386,13 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 #pragma mark - SPAsyncVideoReaderDelegate
 
 - (void)asyncVideoReaderReady:(SPAsyncVideoReader *)asyncVideoReader {
+    [self updateLayerTransformation:asyncVideoReader];
     if ([self.delegate respondsToSelector:@selector(asyncVideoView:didReceiveAssetNaturalSize:)]) {
         [self.delegate asyncVideoView:self didReceiveAssetNaturalSize:asyncVideoReader.assetNaturalSize];
     }
-
+    if ([self.delegate respondsToSelector:@selector(asyncVideoView:didReceiveAssetDuration:)]) {
+        [self.delegate asyncVideoView:self didReceiveAssetDuration:asyncVideoReader.assetDuration];
+    }
     [self startReading];
 }
 

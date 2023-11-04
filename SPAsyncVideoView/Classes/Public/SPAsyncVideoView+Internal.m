@@ -64,10 +64,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 - (void)setAsset:(nullable SPAsyncVideoAsset *)asset {
     NSAssert([NSThread isMainThread], @"Thread Checker");
 
-    if (asset == nil) {
-        [self setOverlayHidden:NO];
-    }
-
     if ([_asset isEqual:asset]) {
         return;
     }
@@ -135,20 +131,9 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     [super layoutSubviews];
 
     self.displayLayer.frame = self.bounds;
-    self.overlayView.frame = self.bounds;
 }
 
 #pragma mark - Private API
-
-- (void)setOverlayHidden:(BOOL)hidden {
-    if ([NSThread mainThread] == [NSThread currentThread]) {
-        self.overlayView.hidden = hidden;
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            self.overlayView.hidden = hidden;
-        });
-    }
-}
 
 - (void)internalFlush {
     if ([self.delegate respondsToSelector:@selector(asyncVideoViewWillFlush:)]) {
@@ -169,7 +154,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     [self internalFlush];
     self.assetReader.delegate = nil;
     self.assetReader = nil;
-    [self setOverlayHidden:NO];
 }
 
 - (void)forceRestart {
@@ -186,10 +170,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 - (void)commonInit {
     _displayLayer = [AVSampleBufferDisplayLayer layer];
     [self.layer addSublayer:self.displayLayer];
-
-    _overlayView = [UIView new];
-    self.overlayView.backgroundColor = [UIColor blackColor];
-    [self addSubview:self.overlayView];
 
     self.workingQueue = dispatch_queue_create("com.com.SPAsyncVideoViewQueue", DISPATCH_QUEUE_SERIAL);
     self.backgroundColor = [UIColor blackColor];
@@ -312,10 +292,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
                 }
                 
                 CFRelease(sampleBuffer);
-
-                if (isFirstFrame) {
-                    [weakSelf setOverlayHidden:YES];
-                }
 
                 isFirstFrame = NO;
 

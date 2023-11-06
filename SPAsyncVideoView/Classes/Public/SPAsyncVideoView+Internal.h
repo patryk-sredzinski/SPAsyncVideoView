@@ -50,7 +50,7 @@ IB_DESIGNABLE
 @property (nonatomic, assign) SPAsyncVideoViewActionAtItemEnd actionAtItemEnd;
 @property (nonatomic, assign) IBInspectable BOOL autoPlay;
 @property (nonatomic, assign) IBInspectable BOOL restartPlaybackOnEnteringForeground;
-@property (nonatomic, strong, readonly) UIView *overlayView;
+@property (nonatomic, strong, readonly) UIImageView *overlayView;
 
 - (void)playVideo;
 - (void)stopVideo;

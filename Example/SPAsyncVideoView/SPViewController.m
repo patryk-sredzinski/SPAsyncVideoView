@@ -14,67 +14,45 @@
 
 @interface SPViewController ()
 
-@property (nonatomic, strong) NSArray<NSURL *> *mp4Urls;
-@property (nonatomic, strong) NSArray<NSURL *> *gifUrls;
+@property (nonatomic, strong) NSURL *mp4Url;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @end
 
 @implementation SPViewController
+- (IBAction)reloadAction:(id)sender {
+    
+    for (UIView* view in self.containerView.subviews) {
+        [view removeFromSuperview];
+    }
+    UIImage* image = [UIImage imageNamed:@"placeholder"];
+    UIImageView* behindPlaceholderView = [[UIImageView alloc] initWithImage:image];
+    [self.containerView addSubview:behindPlaceholderView];
+    [behindPlaceholderView setFrame:self.containerView.bounds];
+    
+    SPAsyncVideoView* videoView = [[SPAsyncVideoView alloc] init];
+    [videoView.overlayView setImage:image];
+    [videoView setBackgroundColor:[UIColor clearColor]];
+    videoView.asset = [[SPAsyncVideoAsset alloc] initWithURL:self.mp4Url type:SPAsyncVideoAssetTypeVideo];
+    [self.containerView addSubview:videoView];
+    [videoView setFrame:self.containerView.bounds];
+    
+
+//    [videoView.overlayView setBackgroundColor:[UIColor clearColor]];
+
+//    [videoView.overlayView addSubview:imageView];
+//    [videoView.overlayView setBackgroundColor:[UIColor clearColor]];
+//    [imageView setFrame:videoView.overlayView.bounds];
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mp4Urls = @[[[NSBundle mainBundle] URLForResource:@"small" withExtension:@"mp4"],
-                     [[NSBundle mainBundle] URLForResource:@"medium" withExtension:@"mp4"],
-                     [[NSBundle mainBundle] URLForResource:@"big" withExtension:@"mp4"]];
-
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Random Scroll"
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(rightBarButtonItemPressed:)];
-
-    self.gifUrls = @[[[NSBundle mainBundle] URLForResource:@"200w" withExtension:@"gif"],
-                     [[NSBundle mainBundle] URLForResource:@"201w" withExtension:@"gif"]];
-
-	// Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)rightBarButtonItemPressed:(id)sender {
-    [self.tableView setContentOffset:CGPointMake(0, arc4random() % (NSInteger)self.tableView.contentSize.height) animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1000;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SPViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Default" forIndexPath:indexPath];
-
-    SPAsyncVideoAsset *asset;
-    if (arc4random() % 2 == 1) {
-        NSURL *url = self.mp4Urls[arc4random() % self.mp4Urls.count];
-        asset = [[SPAsyncVideoAsset alloc] initWithURL:url type:SPAsyncVideoAssetTypeVideo];
-    } else {
-        NSURL *url = self.gifUrls[arc4random() % self.gifUrls.count];
-        asset = [[SPAsyncVideoAsset alloc] initWithURL:url type:SPAsyncVideoAssetTypeGIF];
-    }
-
-    cell.videoView.asset = asset;
-
-    return cell;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 240.f;
+    self.mp4Url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"mp4"];
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        [self reloadAction: nil];
+    }];
 }
 
 @end

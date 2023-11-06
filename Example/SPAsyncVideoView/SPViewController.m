@@ -31,19 +31,9 @@
     [behindPlaceholderView setFrame:self.containerView.bounds];
     
     SPAsyncVideoView* videoView = [[SPAsyncVideoView alloc] init];
-    [videoView.overlayView setImage:image];
-    [videoView setBackgroundColor:[UIColor clearColor]];
     videoView.asset = [[SPAsyncVideoAsset alloc] initWithURL:self.mp4Url type:SPAsyncVideoAssetTypeVideo];
     [self.containerView addSubview:videoView];
     [videoView setFrame:self.containerView.bounds];
-    
-
-//    [videoView.overlayView setBackgroundColor:[UIColor clearColor]];
-
-//    [videoView.overlayView addSubview:imageView];
-//    [videoView.overlayView setBackgroundColor:[UIColor clearColor]];
-//    [imageView setFrame:videoView.overlayView.bounds];
-
 }
 
 - (void)viewDidLoad {

@@ -61,14 +61,16 @@
         return;
     }
 
-    NSArray<AVAssetTrack *> *audioTracks = [self.nativeAsset tracksWithMediaType:AVMediaTypeAudio];
-    AVAssetTrack *audioTrack = audioTracks.firstObject;
     AVAssetReaderTrackOutput *outAudio;
-    if (audioTrack != nil) {
-        outAudio = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack
-                                                                                        outputSettings:self.asset.audioSettings];
-        outAudio.supportsRandomAccess = YES;
-        [assetReader addOutput:outAudio];
+    if (_asset.loadAudio) {
+        NSArray<AVAssetTrack *> *audioTracks = [self.nativeAsset tracksWithMediaType:AVMediaTypeAudio];
+        AVAssetTrack *audioTrack = audioTracks.firstObject;
+        if (audioTrack != nil) {
+            outAudio = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack
+                                                                  outputSettings:self.asset.audioSettings];
+            outAudio.supportsRandomAccess = YES;
+            [assetReader addOutput:outAudio];
+        }
     }
     
     if (![assetReader startReading]) {
@@ -166,6 +168,10 @@
 
 - (BOOL)isReadyForMoreMediaData {
     return self.nativeAssetReader.status == AVAssetReaderStatusReading;
+}
+
+- (BOOL)shouldReadAudio {
+    return self.nativeOutAudio != nil;
 }
 
 - (void)dealloc {

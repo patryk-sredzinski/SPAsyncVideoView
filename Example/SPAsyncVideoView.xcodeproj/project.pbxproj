@@ -20,9 +20,10 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		60379D6F2B59CD630057EE74 /* noaudio.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 60379D6E2B59CD630057EE74 /* noaudio.mp4 */; };
+		60379D712B59D0F70057EE74 /* big.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 60379D702B59D0E40057EE74 /* big.mp4 */; };
 		60A9F4C32B59A98300E3DB94 /* SPPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A9F4C22B59A98300E3DB94 /* SPPlayerController.m */; };
 		60A9F4C62B59A9A800E3DB94 /* SPPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A9F4C52B59A9A800E3DB94 /* SPPickerController.m */; };
-		60CED9792B59B4AB002C6348 /* big.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 60CED9782B59B4A4002C6348 /* big.mp4 */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		99F9352477830E46CFFD4C0A /* Pods_SPAsyncVideoView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */; };
 		CF7FE6321D381DDA000822A5 /* small.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CF7FE6311D381D65000822A5 /* small.mp4 */; };
@@ -60,12 +61,13 @@
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		60379D6E2B59CD630057EE74 /* noaudio.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = noaudio.mp4; sourceTree = "<group>"; };
+		60379D702B59D0E40057EE74 /* big.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = big.mp4; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		60A9F4C12B59A98300E3DB94 /* SPPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPPlayerController.h; sourceTree = "<group>"; };
 		60A9F4C22B59A98300E3DB94 /* SPPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPPlayerController.m; sourceTree = "<group>"; };
 		60A9F4C42B59A9A800E3DB94 /* SPPickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPPickerController.h; sourceTree = "<group>"; };
 		60A9F4C52B59A9A800E3DB94 /* SPPickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPPickerController.m; sourceTree = "<group>"; };
-		60CED9782B59B4A4002C6348 /* big.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = big.mp4; sourceTree = "<group>"; };
 		6535C4E8E6461703EDF0CA4B /* SPAsyncVideoView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SPAsyncVideoView.podspec; path = ../SPAsyncVideoView.podspec; sourceTree = "<group>"; };
 		6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPAsyncVideoView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -173,7 +175,8 @@
 			children = (
 				CF7FE6311D381D65000822A5 /* small.mp4 */,
 				CF7FE6371D38277A000822A5 /* medium.mp4 */,
-				60CED9782B59B4A4002C6348 /* big.mp4 */,
+				60379D702B59D0E40057EE74 /* big.mp4 */,
+				60379D6E2B59CD630057EE74 /* noaudio.mp4 */,
 				6003F595195388D20070C39A /* SPAsyncVideoView-Info.plist */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
@@ -295,11 +298,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60CED9792B59B4AB002C6348 /* big.mp4 in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				CF7FE6391D38277A000822A5 /* medium.mp4 in Resources */,
 				CF7FE6321D381DDA000822A5 /* small.mp4 in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				60379D6F2B59CD630057EE74 /* noaudio.mp4 in Resources */,
+				60379D712B59D0F70057EE74 /* big.mp4 in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

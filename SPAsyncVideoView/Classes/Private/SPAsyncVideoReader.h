@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, getter=isReadyForMoreMediaData) BOOL readyForMoreMediaData;
 
 - (instancetype)initWithAsset:(SPAsyncVideoAsset *)asset readingQueue:(dispatch_queue_t)readingQueue;
+- (BOOL)shouldReadAudio;
 - (void)startReading;
 - (void)resetToBegining;
 - (CMSampleBufferRef)copyNextVideoSampleBuffer;

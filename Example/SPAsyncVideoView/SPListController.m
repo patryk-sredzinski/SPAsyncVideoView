@@ -55,6 +55,7 @@
     asset = [[SPAsyncVideoAsset alloc] initWithURL:url loadAudio:NO];
     
     cell.videoView.asset = asset;
+    [cell.videoView playVideo];
     
     return cell;
 }

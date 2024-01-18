@@ -39,6 +39,7 @@
     NSURL* url = [[NSBundle mainBundle] URLForResource:@"medium" withExtension:@"mp4"];
     _videoView.asset = nil;
     _videoView.asset = [[SPAsyncVideoAsset alloc] initWithURL:url loadAudio:YES];
+    [_videoView playVideo];
 }
 
 @end

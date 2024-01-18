@@ -92,10 +92,10 @@
     }
 }
 
-- (void)configureVideo {
+- (void)restartVideo {
     NSAssert([NSThread mainThread] == [NSThread mainThread], @"Thread checker");
     NSParameterAssert(self.asset);
-    
+
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.workingQueue, ^{
         [weakSelf setupWithAsset:weakSelf.asset];
@@ -108,7 +108,6 @@
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.workingQueue, ^{
         AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
-        NSLog(@"%f", CMTimeGetSeconds(renderSynchronizer.currentTime));
         [renderSynchronizer setRate:1.0];
     });
 }
@@ -119,7 +118,6 @@
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.workingQueue, ^{
         AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
-        NSLog(@"%f", CMTimeGetSeconds(renderSynchronizer.currentTime));
         [renderSynchronizer setRate:0.0];
     });
 }
@@ -139,7 +137,6 @@
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.workingQueue, ^{
         AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
-        NSLog(@"%f", CMTimeGetSeconds(time));
         [renderSynchronizer setRate:1.0 time:time];
     });
 }
@@ -244,7 +241,7 @@
 
 - (void)setCurrentControlTimebaseWithTime:(CMTime)time {
     AVSampleBufferRenderSynchronizer *renderSynchronizer = self.renderSynchronizer;
-    [renderSynchronizer setRate:1.0 time:time];
+    [renderSynchronizer setRate:renderSynchronizer.rate time:time];
 }
 
 - (void)startReading {
@@ -309,6 +306,10 @@
     [weakSelf.audioRenderer requestMediaDataWhenReadyOnQueue:readingQueue usingBlock:^{
         AVSampleBufferAudioRenderer *audioRenderer = weakSelf.audioRenderer;
         SPAsyncVideoReader *assetReader = weakSelf.assetReader;
+        
+        if (![assetReader shouldReadAudio]) {
+            return;
+        }
         
         if (![assetReader isReadyForMoreMediaData]) {
             return;

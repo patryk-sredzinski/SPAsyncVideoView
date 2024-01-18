@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) SPAsyncVideoViewActionAtItemEnd actionAtItemEnd;
 @property (nonatomic, assign) BOOL restartPlaybackOnEnteringForeground;
 
-- (void)configureVideo;
+- (void)restartVideo;
 - (void)playVideo;
 - (void)pauseVideo;
 - (void)stopVideo;

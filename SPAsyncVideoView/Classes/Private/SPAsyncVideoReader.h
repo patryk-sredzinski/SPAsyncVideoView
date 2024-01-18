@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SPAsyncVideoReader : NSObject
 
 @property (nonatomic, assign) CGSize assetNaturalSize;
+@property (nonatomic, assign) CGAffineTransform assetPrefferedTransform;
+@property (nonatomic, assign) CMTime assetDuration;
 @property (atomic, strong, readonly) SPAsyncVideoAsset *asset;
 @property (atomic, strong, readonly) dispatch_queue_t readingQueue;
 @property (nonatomic, weak) id<SPAsyncVideoReaderDelegate> delegate;

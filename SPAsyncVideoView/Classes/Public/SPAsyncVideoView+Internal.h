@@ -5,7 +5,7 @@
 //  Created by Sergey Pimenov on 26/10/2016.
 //
 //
-#import <UIKit/UIKit.h>
+#import <CoreMedia/CoreMedia.h>
 
 @class SPAsyncVideoView;
 @class SPAsyncVideoAsset;
@@ -31,11 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)asyncVideoViewWillRenderFirstFrame:(SPAsyncVideoView *)asyncVideoView;
 - (void)asyncVideoViewDidRenderFirstFrame:(SPAsyncVideoView *)asyncVideoView;
+- (void)asyncVideoViewDidRenderFrame:(SPAsyncVideoView *)asyncVideoView timestamp:(CMTime)timestamp;
 
 - (void)asyncVideoViewWillFlush:(SPAsyncVideoView *)asyncVideoView;
 - (void)asyncVideoViewDidFlush:(SPAsyncVideoView *)asyncVideoView;
 
 - (void)asyncVideoView:(SPAsyncVideoView *)asyncVideoView didReceiveAssetNaturalSize:(CGSize)assetNaturalSize;
+- (void)asyncVideoView:(SPAsyncVideoView *)asyncVideoView didReceiveAssetDuration:(CMTime)assetDuration;
 
 @end
 
@@ -48,7 +50,6 @@ IB_DESIGNABLE
 @property (nonatomic, assign) SPAsyncVideoViewActionAtItemEnd actionAtItemEnd;
 @property (nonatomic, assign) IBInspectable BOOL autoPlay;
 @property (nonatomic, assign) IBInspectable BOOL restartPlaybackOnEnteringForeground;
-@property (nonatomic, strong, readonly) UIView *overlayView;
 
 - (void)playVideo;
 - (void)stopVideo;

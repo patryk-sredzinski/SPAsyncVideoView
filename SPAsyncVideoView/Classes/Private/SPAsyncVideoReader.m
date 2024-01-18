@@ -73,10 +73,14 @@
     _nativeOutVideo = outVideo;
 
     CGSize assetVideoSize = videoTrack.naturalSize;
-
+    CGAffineTransform assetPreferredTransform = videoTrack.preferredTransform;
+    CMTime assetDuration = self.nativeAsset.duration;
+    
     __weak typeof (self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         weakSelf.assetNaturalSize = assetVideoSize;
+        weakSelf.assetPrefferedTransform = assetPreferredTransform;
+        weakSelf.assetDuration = assetDuration;
         [weakSelf.delegate asyncVideoReaderReady:weakSelf];
     });
 }

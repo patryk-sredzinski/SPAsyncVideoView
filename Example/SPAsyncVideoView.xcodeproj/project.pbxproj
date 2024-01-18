@@ -13,7 +13,7 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* SPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* SPAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* SPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* SPViewController.m */; };
+		6003F5A7195388D20070C39A /* SPListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* SPListController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -21,6 +21,8 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		60A9F4C02B59A44C00E3DB94 /* big.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 60A9F4BF2B59A44C00E3DB94 /* big.mp4 */; };
+		60A9F4C32B59A98300E3DB94 /* SPPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A9F4C22B59A98300E3DB94 /* SPPlayerController.m */; };
+		60A9F4C62B59A9A800E3DB94 /* SPPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A9F4C52B59A9A800E3DB94 /* SPPickerController.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		99F9352477830E46CFFD4C0A /* Pods_SPAsyncVideoView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */; };
 		CF7FE6321D381DDA000822A5 /* small.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CF7FE6311D381D65000822A5 /* small.mp4 */; };
@@ -50,8 +52,8 @@
 		6003F59B195388D20070C39A /* SPAsyncVideoView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPAsyncVideoView-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* SPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* SPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* SPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* SPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPViewController.m; sourceTree = "<group>"; };
+		6003F5A5195388D20070C39A /* SPListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPListController.h; sourceTree = "<group>"; };
+		6003F5A6195388D20070C39A /* SPListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPListController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* SPAsyncVideoView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPAsyncVideoView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -60,6 +62,10 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		60A9F4BF2B59A44C00E3DB94 /* big.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = big.mp4; sourceTree = "<group>"; };
+		60A9F4C12B59A98300E3DB94 /* SPPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPPlayerController.h; sourceTree = "<group>"; };
+		60A9F4C22B59A98300E3DB94 /* SPPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPPlayerController.m; sourceTree = "<group>"; };
+		60A9F4C42B59A9A800E3DB94 /* SPPickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPPickerController.h; sourceTree = "<group>"; };
+		60A9F4C52B59A9A800E3DB94 /* SPPickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPPickerController.m; sourceTree = "<group>"; };
 		6535C4E8E6461703EDF0CA4B /* SPAsyncVideoView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SPAsyncVideoView.podspec; path = ../SPAsyncVideoView.podspec; sourceTree = "<group>"; };
 		6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPAsyncVideoView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -147,8 +153,12 @@
 				6003F59C195388D20070C39A /* SPAppDelegate.h */,
 				6003F59D195388D20070C39A /* SPAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* SPViewController.h */,
-				6003F5A6195388D20070C39A /* SPViewController.m */,
+				60A9F4C42B59A9A800E3DB94 /* SPPickerController.h */,
+				60A9F4C52B59A9A800E3DB94 /* SPPickerController.m */,
+				6003F5A5195388D20070C39A /* SPListController.h */,
+				6003F5A6195388D20070C39A /* SPListController.m */,
+				60A9F4C12B59A98300E3DB94 /* SPPlayerController.h */,
+				60A9F4C22B59A98300E3DB94 /* SPPlayerController.m */,
 				CF7FE6331D382008000822A5 /* SPViewCell.h */,
 				CF7FE6341D382008000822A5 /* SPViewCell.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
@@ -359,7 +369,9 @@
 			files = (
 				6003F59E195388D20070C39A /* SPAppDelegate.m in Sources */,
 				CF7FE6351D382008000822A5 /* SPViewCell.m in Sources */,
-				6003F5A7195388D20070C39A /* SPViewController.m in Sources */,
+				60A9F4C32B59A98300E3DB94 /* SPPlayerController.m in Sources */,
+				60A9F4C62B59A9A800E3DB94 /* SPPickerController.m in Sources */,
+				6003F5A7195388D20070C39A /* SPListController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

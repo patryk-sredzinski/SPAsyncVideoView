@@ -190,7 +190,7 @@
         return;
     }
     
-    if (asset.finalURL == nil) {
+    if (asset.URL == nil) {
         return;
     }
     
@@ -207,7 +207,7 @@
     AVSampleBufferDisplayLayer *displayLayer = self.displayLayer;
     
     CMTimebaseRef controlTimebase;
-    CMTimebaseCreateWithMasterClock(CFAllocatorGetDefault(),
+    CMTimebaseCreateWithSourceClock(CFAllocatorGetDefault(),
                                     CMClockGetHostTimeClock(),
                                     &controlTimebase);
     

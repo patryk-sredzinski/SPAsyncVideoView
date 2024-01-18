@@ -1,24 +1,24 @@
 //
-//  SPViewController.m
+//  SPListController.m
 //  SPAsyncVideoView
 //
 //  Created by Pimenov Sergey on 07/14/2016.
 //  Copyright (c) 2016 Pimenov Sergey. All rights reserved.
 //
 
-#import "SPViewController.h"
+#import "SPListController.h"
 
 @import SPAsyncVideoView;
 
 #import "SPViewCell.h"
 
-@interface SPViewController ()
+@interface SPListController ()
 
 @property (nonatomic, strong) NSArray<NSURL *> *mp4Urls;
 
 @end
 
-@implementation SPViewController
+@implementation SPListController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,7 +30,6 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(rightBarButtonItemPressed:)];
-    
     // Do any additional setup after loading the view, typically from a nib.
 }
 

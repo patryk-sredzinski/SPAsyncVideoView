@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-IB_DESIGNABLE
 @interface SPAsyncVideoView : UIView
 
 @property (nonatomic, weak) id<SPAsyncVideoViewDelegate> delegate;

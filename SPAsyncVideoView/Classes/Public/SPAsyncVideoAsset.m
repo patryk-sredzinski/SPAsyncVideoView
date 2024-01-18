@@ -15,9 +15,8 @@
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        _originalURL = url;
+        _URL = url;
         _outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)};
-        _finalURL = url;
     }
     return self;
 }
@@ -27,11 +26,11 @@
         return NO;
     }
     
-    return [self.originalURL isEqual:[object originalURL]];
+    return [self.URL isEqual:[object URL]];
 }
 
 - (NSUInteger)hash {
-    return self.originalURL.hash;
+    return self.URL.hash;
 }
 
 @end

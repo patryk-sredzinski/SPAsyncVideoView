@@ -1,5 +1,5 @@
 //
-//  SPViewController.h
+//  SPPickerController.h
 //  SPAsyncVideoView
 //
 //  Created by Pimenov Sergey on 07/14/2016.
@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface SPViewController : UITableViewController
+@interface SPPickerController : UIViewController
 
 @end

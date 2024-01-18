@@ -96,7 +96,7 @@
 - (void)startReading {
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.readingQueue, ^{
-        weakSelf.nativeAsset = [AVURLAsset assetWithURL:weakSelf.asset.finalURL];
+        weakSelf.nativeAsset = [AVURLAsset assetWithURL:weakSelf.asset.URL];
         
         NSArray<NSString *> *keys = @[ @"tracks", @"playable", @"duration" ];
         

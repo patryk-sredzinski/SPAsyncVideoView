@@ -16,19 +16,15 @@
 		4483C2198B1A582116556ADCFA09C762 /* SPAsyncVideoView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 220DFE9E72C365F89F2B31D311904DF1 /* SPAsyncVideoView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49A4CBF2C453D94B6A86448B3479E2D7 /* SPAsyncVideoView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BDBBDD9AC632E2EE4F40D7A0EB0A24 /* SPAsyncVideoView-dummy.m */; };
 		4DCEE2B4B0921D0867EA23E20CB5745F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3784FDBFDCF4690396733643061D89F /* UIKit.framework */; };
-		5EFB6D84D42471CB5662382085D1F4B1 /* SPAGIFMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EB7904D560F5CD0C6EDF134BBAABB7 /* SPAGIFMetadata.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		71FA0F82D3EF337D4A7640B79A0EBEED /* Pods-SPAsyncVideoView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC8AFAA3F4466F1C893E8E8479E8CAA /* Pods-SPAsyncVideoView_Example-dummy.m */; };
-		8DDF7C6D80A044534D82E3EBFC47EC61 /* SPAsyncGIFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 129FE2586BCE0A1384F69876A70A9C14 /* SPAsyncGIFConverter.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		91F582734C2CF5E49677BECB0EC2527C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE39E4179C6499E8F18E6EF520464E1 /* AVFoundation.framework */; };
 		9F4B7ED83E3364877BB86883F0EAE307 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3B8416A8988C121E6E0D2549BAEE2A /* Foundation.framework */; };
-		A71B40A9D72EDA48EF39CB3B43DD57A9 /* SPAGIFMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C545ED72C50A7018BFFE1C467C4548 /* SPAGIFMetadata.m */; };
 		B2A60E3222872BDEF2FAB4EFEE94563B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3784FDBFDCF4690396733643061D89F /* UIKit.framework */; };
 		C87D46923E40BA7DB1CF7D25D012D283 /* SPAsyncVideoView+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 340EBFF979D808189A8425AE3DAC5DC7 /* SPAsyncVideoView+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD463362BB875A00C9EDC2469AE47AC6 /* JPFPSStatus-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 61FAB9710460C73E136DBD27CD045A25 /* JPFPSStatus-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0477BC430AEC11F7F5CCD38D0F499D0 /* SPAsyncVideoView.h in Headers */ = {isa = PBXBuildFile; fileRef = E06220E1B30F3F8131361B91974FB3F5 /* SPAsyncVideoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D9C609DC822C464F5DC28F243390A5B1 /* SPAsyncVideoAsset.h in Headers */ = {isa = PBXBuildFile; fileRef = F28B309E3E7CF7C3880A1C775AC2A526 /* SPAsyncVideoAsset.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF15EB8992F341BA01D730D7CF5ED6C3 /* SPAsyncVideoReader.h in Headers */ = {isa = PBXBuildFile; fileRef = BDD77D9A5E812BF226CC5D3925D6D0F8 /* SPAsyncVideoReader.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E5634AF1EC96BB64170FEB4367BDB4D6 /* SPAsyncGIFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = DEFA1262D98A21C21873F2E67D1B5711 /* SPAsyncGIFConverter.m */; };
 		EA164909737A723B8340DFCEB1F807E6 /* JPFPSStatus-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDF21BCD0CE69CB38F69947AD8B2770 /* JPFPSStatus-dummy.m */; };
 		EB77F78E5AADE7DDA69AE9B982B98483 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B834B3F3EC819EAEE68893C4A15289 /* ImageIO.framework */; };
 		EC88111C5005B4A7E9478A167008BBBE /* JPFPSStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E0728AE6211109BB43403AEF3074D6 /* JPFPSStatus.m */; };
@@ -57,7 +53,6 @@
 /* Begin PBXFileReference section */
 		048ABB0341AAF0174688642FC7EFE422 /* Pods-SPAsyncVideoView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SPAsyncVideoView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		0CBCD9D94307B43F7BB16391B7CE4F60 /* JPFPSStatus.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = JPFPSStatus.modulemap; sourceTree = "<group>"; };
-		129FE2586BCE0A1384F69876A70A9C14 /* SPAsyncGIFConverter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SPAsyncGIFConverter.h; sourceTree = "<group>"; };
 		139143096ED128CD499143DA03EB6D33 /* JPFPSStatus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JPFPSStatus.h; path = JPFPSStatus/JPFPSStatus/JPFPSStatus.h; sourceTree = "<group>"; };
 		13D48A34641F0EEB55F70721CD670034 /* Pods-SPAsyncVideoView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SPAsyncVideoView_Example.modulemap"; sourceTree = "<group>"; };
 		18F8661468BBBBCD97FF0377B80D5973 /* Pods-SPAsyncVideoView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SPAsyncVideoView_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,7 +68,6 @@
 		5503796974F71A4C89C67DD2CC776B3F /* SPAsyncVideoView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPAsyncVideoView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D724D39CBE5912E01605988246F8BB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		61FAB9710460C73E136DBD27CD045A25 /* JPFPSStatus-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JPFPSStatus-umbrella.h"; sourceTree = "<group>"; };
-		62C545ED72C50A7018BFFE1C467C4548 /* SPAGIFMetadata.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SPAGIFMetadata.m; sourceTree = "<group>"; };
 		68DC11E7A9CF7B440D6F2680ADD90965 /* SPAsyncVideoView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SPAsyncVideoView.xcconfig; sourceTree = "<group>"; };
 		69F34312F2A081B98C6F8FB4D7AA9889 /* SPAsyncVideoReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SPAsyncVideoReader.m; sourceTree = "<group>"; };
 		7AC8AFAA3F4466F1C893E8E8479E8CAA /* Pods-SPAsyncVideoView_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SPAsyncVideoView_Example-dummy.m"; sourceTree = "<group>"; };
@@ -91,9 +85,7 @@
 		CF1407ABAB31F004BB3EFDEE4F9E1EED /* JPFPSStatus-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JPFPSStatus-prefix.pch"; sourceTree = "<group>"; };
 		DC396A574540A121747C37086BF27202 /* SPAsyncVideoAsset.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SPAsyncVideoAsset.m; sourceTree = "<group>"; };
 		DCCE9DD3B66527CD971EFD643F803FE1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DEFA1262D98A21C21873F2E67D1B5711 /* SPAsyncGIFConverter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SPAsyncGIFConverter.m; sourceTree = "<group>"; };
 		E06220E1B30F3F8131361B91974FB3F5 /* SPAsyncVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SPAsyncVideoView.h; sourceTree = "<group>"; };
-		E3EB7904D560F5CD0C6EDF134BBAABB7 /* SPAGIFMetadata.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SPAGIFMetadata.h; sourceTree = "<group>"; };
 		E42476D2C4BBB3FA770EFAC5BA5BBA92 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		E7A69583F70B5BDB056ED3A60599D46A /* Pods-SPAsyncVideoView_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SPAsyncVideoView_Example-resources.sh"; sourceTree = "<group>"; };
 		F28B309E3E7CF7C3880A1C775AC2A526 /* SPAsyncVideoAsset.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SPAsyncVideoAsset.h; sourceTree = "<group>"; };
@@ -193,7 +185,6 @@
 			children = (
 				BDD77D9A5E812BF226CC5D3925D6D0F8 /* SPAsyncVideoReader.h */,
 				69F34312F2A081B98C6F8FB4D7AA9889 /* SPAsyncVideoReader.m */,
-				D561329BB791C1CF44EE1AAF3F967F6E /* GIF */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -289,17 +280,6 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		D561329BB791C1CF44EE1AAF3F967F6E /* GIF */ = {
-			isa = PBXGroup;
-			children = (
-				E3EB7904D560F5CD0C6EDF134BBAABB7 /* SPAGIFMetadata.h */,
-				62C545ED72C50A7018BFFE1C467C4548 /* SPAGIFMetadata.m */,
-				129FE2586BCE0A1384F69876A70A9C14 /* SPAsyncGIFConverter.h */,
-				DEFA1262D98A21C21873F2E67D1B5711 /* SPAsyncGIFConverter.m */,
-			);
-			path = GIF;
-			sourceTree = "<group>";
-		};
 		DCC2CC7CDC0701C4B38659DF8AF882DB /* SPAsyncVideoView */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,8 +323,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EFB6D84D42471CB5662382085D1F4B1 /* SPAGIFMetadata.h in Headers */,
-				8DDF7C6D80A044534D82E3EBFC47EC61 /* SPAsyncGIFConverter.h in Headers */,
 				D9C609DC822C464F5DC28F243390A5B1 /* SPAsyncVideoAsset.h in Headers */,
 				DF15EB8992F341BA01D730D7CF5ED6C3 /* SPAsyncVideoReader.h in Headers */,
 				C87D46923E40BA7DB1CF7D25D012D283 /* SPAsyncVideoView+Internal.h in Headers */,
@@ -451,8 +429,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A71B40A9D72EDA48EF39CB3B43DD57A9 /* SPAGIFMetadata.m in Sources */,
-				E5634AF1EC96BB64170FEB4367BDB4D6 /* SPAsyncGIFConverter.m in Sources */,
 				F320660935D3822425DF1AEB31E3BCB0 /* SPAsyncVideoAsset.m in Sources */,
 				1F9A71D2D87F47CC4230826EC7FB711A /* SPAsyncVideoReader.m in Sources */,
 				2BB61C0F3866A9C42F05F3E28BBD090B /* SPAsyncVideoView+Internal.m in Sources */,

@@ -13,29 +13,12 @@
 @implementation SPAsyncVideoAsset
 
 - (instancetype)initWithURL:(NSURL *)url {
-    return [self initWithURL:url type:SPAsyncVideoAssetTypeVideo];
-}
-
-- (instancetype)initWithURL:(NSURL *)url type:(SPAsyncVideoAssetType)type {
     self = [super init];
-
     if (self) {
         _originalURL = url;
-        _type = type;
-        
-        switch (type) {
-            case SPAsyncVideoAssetTypeGIF:
-                _outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_32ARGB)};
-                break;
-            case SPAsyncVideoAssetTypeVideo:
-                _outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)};
-                _finalURL = url;
-                break;
-            default:
-                break;
-        }
+        _outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)};
+        _finalURL = url;
     }
-
     return self;
 }
 
@@ -43,7 +26,7 @@
     if (![object isKindOfClass:[SPAsyncVideoAsset class]]) {
         return NO;
     }
-
+    
     return [self.originalURL isEqual:[object originalURL]];
 }
 

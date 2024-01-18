@@ -45,12 +45,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong) SPAsyncVideoAsset *asset;
 @property (nonatomic, assign) SPAsyncVideoViewVideoGravity videoGravity;
 @property (nonatomic, assign) SPAsyncVideoViewActionAtItemEnd actionAtItemEnd;
-@property (nonatomic, assign) IBInspectable BOOL autoPlay;
-@property (nonatomic, assign) IBInspectable BOOL restartPlaybackOnEnteringForeground;
+@property (nonatomic, assign) BOOL restartPlaybackOnEnteringForeground;
 
+- (void)configureVideo;
 - (void)playVideo;
+- (void)pauseVideo;
 - (void)stopVideo;
-
+- (void)seek:(CMTime)time;
 @end
 
 NS_ASSUME_NONNULL_END

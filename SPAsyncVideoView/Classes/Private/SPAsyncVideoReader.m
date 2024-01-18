@@ -17,6 +17,7 @@
 @property (atomic, strong) AVURLAsset *nativeAsset;
 @property (atomic, strong) AVAssetReader *nativeAssetReader;
 @property (atomic, strong) AVAssetReaderTrackOutput *nativeOutVideo;
+@property (atomic, strong) AVAssetReaderTrackOutput *nativeOutAudio;
 
 @end
 
@@ -46,19 +47,29 @@
     
     NSArray<AVAssetTrack *> *videoTracks = [self.nativeAsset tracksWithMediaType:AVMediaTypeVideo];
     AVAssetTrack *videoTrack = videoTracks.firstObject;
-    
-    if (videoTrack == nil) {
+    AVAssetReaderTrackOutput *outVideo;
+    if (videoTrack != nil) {
+        outVideo = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack
+                                                                                        outputSettings:self.asset.videoSettings];
+        outVideo.supportsRandomAccess = YES;
+        [assetReader addOutput:outVideo];
+    } else {
         NSError *error = [NSError errorWithDomain:AVFoundationErrorDomain
                                              code:AVErrorOperationNotSupportedForAsset
                                          userInfo:nil];
         [self notifyAboutError:error];
         return;
     }
-    
-    AVAssetReaderTrackOutput *outVideo = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack
-                                                                                    outputSettings:self.asset.outputSettings];
-    outVideo.supportsRandomAccess = YES;
-    [assetReader addOutput:outVideo];
+
+    NSArray<AVAssetTrack *> *audioTracks = [self.nativeAsset tracksWithMediaType:AVMediaTypeAudio];
+    AVAssetTrack *audioTrack = audioTracks.firstObject;
+    AVAssetReaderTrackOutput *outAudio;
+    if (audioTrack != nil) {
+        outAudio = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack
+                                                                                        outputSettings:self.asset.audioSettings];
+        outAudio.supportsRandomAccess = YES;
+        [assetReader addOutput:outAudio];
+    }
     
     if (![assetReader startReading]) {
         NSError *error = [NSError errorWithDomain:AVFoundationErrorDomain
@@ -70,7 +81,8 @@
     
     _nativeAssetReader = assetReader;
     _nativeOutVideo = outVideo;
-    
+    _nativeOutAudio = outAudio;
+
     CGSize assetVideoSize = videoTrack.naturalSize;
     CGAffineTransform assetPreferredTransform = videoTrack.preferredTransform;
     CMTime assetDuration = self.nativeAsset.duration;
@@ -138,12 +150,18 @@
 }
 
 - (void)resetToBegining {
-    NSValue *beginingTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutVideo.track.timeRange];
-    [self.nativeOutVideo resetForReadingTimeRanges:@[ beginingTimeRangeValue ]];
+    NSValue *beginingVideoTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutVideo.track.timeRange];
+    [self.nativeOutVideo resetForReadingTimeRanges:@[ beginingVideoTimeRangeValue ]];
+    NSValue *beginingAudioTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutAudio.track.timeRange];
+    [self.nativeOutAudio resetForReadingTimeRanges:@[ beginingAudioTimeRangeValue ]];
 }
 
-- (CMSampleBufferRef)copyNextSampleBuffer {
+- (CMSampleBufferRef)copyNextVideoSampleBuffer {
     return [self.nativeOutVideo copyNextSampleBuffer];
+}
+
+- (CMSampleBufferRef)copyNextAudioSampleBuffer {
+    return [self.nativeOutAudio copyNextSampleBuffer];
 }
 
 - (BOOL)isReadyForMoreMediaData {

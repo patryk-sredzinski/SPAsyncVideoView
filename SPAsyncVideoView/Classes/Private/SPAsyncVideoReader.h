@@ -34,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithAsset:(SPAsyncVideoAsset *)asset readingQueue:(dispatch_queue_t)readingQueue;
 - (void)startReading;
 - (void)resetToBegining;
-- (CMSampleBufferRef)copyNextSampleBuffer;
+- (CMSampleBufferRef)copyNextVideoSampleBuffer;
+- (CMSampleBufferRef)copyNextAudioSampleBuffer;
 
 @end
 

@@ -17,9 +17,11 @@
 @implementation SPPlayerController
 
 - (IBAction)playAction:(id)sender {
+    [_videoView playVideo];
 }
 
 - (IBAction)pauseAction:(id)sender {
+    [_videoView pauseVideo];
 }
 
 - (IBAction)muteAction:(id)sender {
@@ -29,12 +31,14 @@
 }
 
 - (IBAction)seekAction:(id)sender {
+    CMTime time = CMTimeMake(5, kCMTimeMaxTimescale);
+    [_videoView seek:time];
 }
 
 - (IBAction)reloadAction:(id)sender {
-    NSURL* url = [[NSBundle mainBundle] URLForResource:@"big" withExtension:@"mp4"];
+    NSURL* url = [[NSBundle mainBundle] URLForResource:@"medium" withExtension:@"mp4"];
     _videoView.asset = nil;
-    _videoView.asset = [[SPAsyncVideoAsset alloc] initWithURL:url];
+    _videoView.asset = [[SPAsyncVideoAsset alloc] initWithURL:url loadAudio:YES];
 }
 
 @end

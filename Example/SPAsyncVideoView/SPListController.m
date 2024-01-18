@@ -52,7 +52,7 @@
     
     SPAsyncVideoAsset *asset;
     NSURL *url = self.mp4Urls[arc4random() % self.mp4Urls.count];
-    asset = [[SPAsyncVideoAsset alloc] initWithURL:url];
+    asset = [[SPAsyncVideoAsset alloc] initWithURL:url loadAudio:NO];
     
     cell.videoView.asset = asset;
     

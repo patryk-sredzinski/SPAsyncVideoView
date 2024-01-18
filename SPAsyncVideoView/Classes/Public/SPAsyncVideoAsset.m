@@ -12,11 +12,13 @@
 
 @implementation SPAsyncVideoAsset
 
-- (instancetype)initWithURL:(NSURL *)url {
+- (instancetype)initWithURL:(NSURL *)url loadAudio:(BOOL)loadAudio {
     self = [super init];
     if (self) {
         _URL = url;
-        _outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)};
+        _videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)};
+        _audioSettings =  @{ AVFormatIDKey : [NSNumber numberWithInt:kAudioFormatLinearPCM] };
+        _loadAudio = loadAudio;
     }
     return self;
 }

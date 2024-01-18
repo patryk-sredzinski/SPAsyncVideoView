@@ -20,6 +20,8 @@
 @property (atomic, strong) dispatch_queue_t workingQueue;
 @property (nonatomic, strong) SPAsyncVideoReader *assetReader;
 @property (atomic, strong) AVSampleBufferDisplayLayer *displayLayer;
+@property (atomic, strong) AVSampleBufferAudioRenderer *audioRenderer;
+@property (atomic, strong) AVSampleBufferRenderSynchronizer *renderSynchronizer;
 
 @end
 
@@ -62,9 +64,7 @@
             [weakSelf flushAndStopReading];
         }
         
-        if (weakSelf.autoPlay) {
-            [weakSelf setupWithAsset:asset];
-        }
+        [weakSelf setupWithAsset:asset];
     });
 }
 
@@ -92,7 +92,7 @@
     }
 }
 
-- (void)playVideo {
+- (void)configureVideo {
     NSAssert([NSThread mainThread] == [NSThread mainThread], @"Thread checker");
     NSParameterAssert(self.asset);
     
@@ -102,12 +102,45 @@
     });
 }
 
+- (void)playVideo {
+    NSAssert([NSThread isMainThread], @"Thread Checker");
+    
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(self.workingQueue, ^{
+        AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
+        NSLog(@"%f", CMTimeGetSeconds(renderSynchronizer.currentTime));
+        [renderSynchronizer setRate:1.0];
+    });
+}
+
+- (void)pauseVideo {
+    NSAssert([NSThread isMainThread], @"Thread Checker");
+    
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(self.workingQueue, ^{
+        AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
+        NSLog(@"%f", CMTimeGetSeconds(renderSynchronizer.currentTime));
+        [renderSynchronizer setRate:0.0];
+    });
+}
+
 - (void)stopVideo {
     NSAssert([NSThread isMainThread], @"Thread Checker");
     
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.workingQueue, ^{
         [weakSelf flushAndStopReading];
+    });
+}
+
+- (void)seek:(CMTime)time {
+    NSAssert([NSThread isMainThread], @"Thread Checker");
+    
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(self.workingQueue, ^{
+        AVSampleBufferRenderSynchronizer *renderSynchronizer = [weakSelf renderSynchronizer];
+        NSLog(@"%f", CMTimeGetSeconds(time));
+        [renderSynchronizer setRate:1.0 time:time];
     });
 }
 
@@ -135,9 +168,11 @@
     }
     
     AVSampleBufferDisplayLayer *displayLayer = [self displayLayer];
-    
+    AVSampleBufferAudioRenderer *audioRenderer = [self audioRenderer];
     [displayLayer stopRequestingMediaData];
     [displayLayer flushAndRemoveImage];
+    [audioRenderer stopRequestingMediaData];
+    [audioRenderer flush];
     
     if ([self.delegate respondsToSelector:@selector(asyncVideoViewDidFlush:)]) {
         [self.delegate asyncVideoViewDidFlush:self];
@@ -164,6 +199,11 @@
 
 - (void)commonInit {
     _displayLayer = [AVSampleBufferDisplayLayer layer];
+    _audioRenderer = [AVSampleBufferAudioRenderer new];
+    _renderSynchronizer = [AVSampleBufferRenderSynchronizer new];
+    [_renderSynchronizer addRenderer:_displayLayer];
+    [_renderSynchronizer addRenderer:_audioRenderer];
+
     [self.layer addSublayer:self.displayLayer];
     
     self.workingQueue = dispatch_queue_create("com.com.SPAsyncVideoViewQueue", DISPATCH_QUEUE_SERIAL);
@@ -171,7 +211,6 @@
     
     self.actionAtItemEnd = SPAsyncVideoViewActionAtItemEndRepeat;
     self.videoGravity = SPAsyncVideoViewVideoGravityResizeAspectFill;
-    self.autoPlay = YES;
     self.canRenderAsset = [UIApplication sharedApplication].applicationState != UIApplicationStateBackground;
     self.restartPlaybackOnEnteringForeground = YES;
     
@@ -204,83 +243,120 @@
 }
 
 - (void)setCurrentControlTimebaseWithTime:(CMTime)time {
-    AVSampleBufferDisplayLayer *displayLayer = self.displayLayer;
-    
-    CMTimebaseRef controlTimebase;
-    CMTimebaseCreateWithSourceClock(CFAllocatorGetDefault(),
-                                    CMClockGetHostTimeClock(),
-                                    &controlTimebase);
-    
-    displayLayer.controlTimebase = controlTimebase;
-    
-    CMTimebaseSetTime(displayLayer.controlTimebase, time);
-    CMTimebaseSetRate(displayLayer.controlTimebase, 1.);
+    AVSampleBufferRenderSynchronizer *renderSynchronizer = self.renderSynchronizer;
+    [renderSynchronizer setRate:1.0 time:time];
 }
 
 - (void)startReading {
     __weak typeof (self) weakSelf = self;
-    __block BOOL isFirstFrame = YES;
     dispatch_queue_t readingQueue = self.workingQueue;
     
     dispatch_async(readingQueue, ^{
-        [weakSelf setCurrentControlTimebaseWithTime:CMTimeMake(0., 1.)];
-        [weakSelf.displayLayer requestMediaDataWhenReadyOnQueue:readingQueue usingBlock:^{
-            AVSampleBufferDisplayLayer *displayLayer = weakSelf.displayLayer;
-            SPAsyncVideoReader *assetReader = weakSelf.assetReader;
-            
-            if (![assetReader isReadyForMoreMediaData]) {
-                return;
-            }
-            
-            if (!displayLayer.isReadyForMoreMediaData
-                || displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
-                return;
-            }
-            
-            if (!weakSelf.canRenderAsset) {
-                return;
-            }
-            
-            CMSampleBufferRef sampleBuffer = [assetReader copyNextSampleBuffer];
-            
-            if (sampleBuffer != NULL) {
-                [displayLayer enqueueSampleBuffer:sampleBuffer];
-                
-                if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFrame:timestamp:)]) {
-                    [weakSelf.delegate asyncVideoViewDidRenderFrame:weakSelf timestamp:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)];
-                }
-                
-                CFRelease(sampleBuffer);
-                
-                if (isFirstFrame) {
-                    [weakSelf setVideoVisible:YES];
-                }
-                
-                isFirstFrame = NO;
-                
-                return;
-            }
-            
-            if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidPlayToEnd:)]) {
-                [weakSelf.delegate asyncVideoViewDidPlayToEnd:weakSelf];
-            }
-            
-            switch (weakSelf.actionAtItemEnd) {
-                case SPAsyncVideoViewActionAtItemEndNone: {
-                    [weakSelf flushAndStopReading];
-                    break;
-                }
-                case SPAsyncVideoViewActionAtItemEndRepeat: {
-                    [displayLayer flush];
-                    [weakSelf setCurrentControlTimebaseWithTime:CMTimeMake(0., 1.)];
-                    [assetReader resetToBegining];
-                    break;
-                }
-                default:
-                    break;
-            }
-        }];
+        [weakSelf setCurrentControlTimebaseWithTime:kCMTimeZero];
+        [weakSelf requestAudioSamples];
+        [weakSelf requestVideoSamples];
     });
+}
+
+- (void)requestVideoSamples {
+    __block BOOL isFirstFrame = YES;
+    dispatch_queue_t readingQueue = self.workingQueue;
+    __weak typeof (self) weakSelf = self;
+    [weakSelf.displayLayer requestMediaDataWhenReadyOnQueue:readingQueue usingBlock:^{
+        AVSampleBufferDisplayLayer *displayLayer = weakSelf.displayLayer;
+        SPAsyncVideoReader *assetReader = weakSelf.assetReader;
+        
+        if (![assetReader isReadyForMoreMediaData]) {
+            return;
+        }
+        
+        if (!displayLayer.isReadyForMoreMediaData
+            || displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
+            return;
+        }
+        
+        if (!weakSelf.canRenderAsset) {
+            return;
+        }
+        
+        CMSampleBufferRef sampleBuffer = [assetReader copyNextVideoSampleBuffer];
+        
+        if (sampleBuffer != NULL) {
+            [displayLayer enqueueSampleBuffer:sampleBuffer];
+            
+            if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFrame:timestamp:)]) {
+                [weakSelf.delegate asyncVideoViewDidRenderFrame:weakSelf timestamp:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)];
+            }
+            
+            CFRelease(sampleBuffer);
+            
+            if (isFirstFrame) {
+                [weakSelf setVideoVisible:YES];
+            }
+            
+            isFirstFrame = NO;
+            
+            return;
+        }
+        
+        [weakSelf handleVideoEnd];
+    }];
+}
+
+- (void)requestAudioSamples {
+    dispatch_queue_t readingQueue = self.workingQueue;
+    __weak typeof (self) weakSelf = self;
+    [weakSelf.audioRenderer requestMediaDataWhenReadyOnQueue:readingQueue usingBlock:^{
+        AVSampleBufferAudioRenderer *audioRenderer = weakSelf.audioRenderer;
+        SPAsyncVideoReader *assetReader = weakSelf.assetReader;
+        
+        if (![assetReader isReadyForMoreMediaData]) {
+            return;
+        }
+        
+        if (!audioRenderer.isReadyForMoreMediaData
+            || audioRenderer.status == AVQueuedSampleBufferRenderingStatusFailed) {
+            return;
+        }
+        
+        if (!weakSelf.canRenderAsset) {
+            return;
+        }
+        
+        CMSampleBufferRef sampleBuffer = [assetReader copyNextAudioSampleBuffer];
+        
+        if (sampleBuffer != NULL) {
+            [audioRenderer enqueueSampleBuffer:sampleBuffer];
+            return;
+        }
+    }];
+}
+
+- (void)handleVideoEnd {
+    __weak typeof (self) weakSelf = self;
+    AVSampleBufferAudioRenderer *audioRenderer = weakSelf.audioRenderer;
+    AVSampleBufferDisplayLayer *displayLayer = weakSelf.displayLayer;
+    SPAsyncVideoReader *assetReader = weakSelf.assetReader;
+
+    if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidPlayToEnd:)]) {
+        [weakSelf.delegate asyncVideoViewDidPlayToEnd:weakSelf];
+    }
+    
+    switch (weakSelf.actionAtItemEnd) {
+        case SPAsyncVideoViewActionAtItemEndNone: {
+            [weakSelf flushAndStopReading];
+            break;
+        }
+        case SPAsyncVideoViewActionAtItemEndRepeat: {
+            [displayLayer flush];
+            [audioRenderer flush];
+            [weakSelf setCurrentControlTimebaseWithTime:kCMTimeZero];
+            [assetReader resetToBegining];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)updateLayerTransformation:(SPAsyncVideoReader *)asyncVideoReader {
@@ -350,5 +426,4 @@
                                                     name:UIApplicationWillEnterForegroundNotification
                                                   object:nil];
 }
-
 @end

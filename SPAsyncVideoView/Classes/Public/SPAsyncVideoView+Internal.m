@@ -244,15 +244,7 @@
             CMSampleBufferRef sampleBuffer = [assetReader copyNextSampleBuffer];
 
             if (sampleBuffer != NULL) {
-                if (isFirstFrame && [weakSelf.delegate respondsToSelector:@selector(asyncVideoViewWillRenderFirstFrame:)]) {
-                    [weakSelf.delegate asyncVideoViewWillRenderFirstFrame:weakSelf];
-                }
-
                 [displayLayer enqueueSampleBuffer:sampleBuffer];
-
-                if (isFirstFrame && [weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFirstFrame:)]) {
-                    [weakSelf.delegate asyncVideoViewDidRenderFirstFrame:weakSelf];
-                }
                 
                 if ([weakSelf.delegate respondsToSelector:@selector(asyncVideoViewDidRenderFrame:timestamp:)]) {
                     [weakSelf.delegate asyncVideoViewDidRenderFrame:weakSelf timestamp:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)];

@@ -29,8 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)asyncVideoView:(SPAsyncVideoView *)asyncVideoView didOccurError:(NSError *)error;
 - (void)asyncVideoViewDidPlayToEnd:(SPAsyncVideoView *)asyncVideoView;
 
-- (void)asyncVideoViewWillRenderFirstFrame:(SPAsyncVideoView *)asyncVideoView;
-- (void)asyncVideoViewDidRenderFirstFrame:(SPAsyncVideoView *)asyncVideoView;
 - (void)asyncVideoViewDidRenderFrame:(SPAsyncVideoView *)asyncVideoView timestamp:(CMTime)timestamp;
 
 - (void)asyncVideoViewWillFlush:(SPAsyncVideoView *)asyncVideoView;

@@ -20,34 +20,33 @@
 
 @end
 
-
 @implementation SPAsyncVideoReader
 
 - (instancetype)initWithAsset:(SPAsyncVideoAsset *)asset readingQueue:(dispatch_queue_t)readingQueue {
     self = [super init];
-
+    
     if (self) {
         _asset = asset;
         _readingQueue = readingQueue;
     }
-
+    
     return self;
 }
 
 - (void)startReadingNativeAsset {
     NSError *error = nil;
-
+    
     AVAssetReader *assetReader = [[AVAssetReader alloc] initWithAsset:(AVAsset *)self.nativeAsset
                                                                 error:&error];
-
+    
     if (error != nil) {
         [self notifyAboutError:error];
         return;
     }
-
+    
     NSArray<AVAssetTrack *> *videoTracks = [self.nativeAsset tracksWithMediaType:AVMediaTypeVideo];
     AVAssetTrack *videoTrack = videoTracks.firstObject;
-
+    
     if (videoTrack == nil) {
         NSError *error = [NSError errorWithDomain:AVFoundationErrorDomain
                                              code:AVErrorOperationNotSupportedForAsset
@@ -55,12 +54,12 @@
         [self notifyAboutError:error];
         return;
     }
-
+    
     AVAssetReaderTrackOutput *outVideo = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack
                                                                                     outputSettings:self.asset.outputSettings];
     outVideo.supportsRandomAccess = YES;
     [assetReader addOutput:outVideo];
-
+    
     if (![assetReader startReading]) {
         NSError *error = [NSError errorWithDomain:AVFoundationErrorDomain
                                              code:AVErrorOperationNotSupportedForAsset
@@ -68,10 +67,10 @@
         [self notifyAboutError:error];
         return;
     }
-
+    
     _nativeAssetReader = assetReader;
     _nativeOutVideo = outVideo;
-
+    
     CGSize assetVideoSize = videoTrack.naturalSize;
     CGAffineTransform assetPreferredTransform = videoTrack.preferredTransform;
     CMTime assetDuration = self.nativeAsset.duration;
@@ -98,9 +97,9 @@
     __weak typeof (self) weakSelf = self;
     dispatch_async(self.readingQueue, ^{
         weakSelf.nativeAsset = [AVURLAsset assetWithURL:weakSelf.asset.finalURL];
-
+        
         NSArray<NSString *> *keys = @[ @"tracks", @"playable", @"duration" ];
-
+        
         [weakSelf.nativeAsset loadValuesAsynchronouslyForKeys:keys completionHandler:^{
             if (weakSelf == nil) {
                 return;
@@ -109,24 +108,24 @@
                 if (weakSelf == nil) {
                     return;
                 }
-
+                
                 NSError *error = nil;
-
+                
                 AVKeyValueStatus status = [weakSelf.nativeAsset statusOfValueForKey:@"tracks" error:&error];
                 if (error != nil || status != AVKeyValueStatusLoaded) {
                     [weakSelf notifyAboutError:error];
                     return;
                 }
-
+                
                 status = [weakSelf.nativeAsset statusOfValueForKey:@"playable" error:&error];
-
+                
                 if (error != nil || status != AVKeyValueStatusLoaded) {
                     [weakSelf notifyAboutError:error];
                     return;
                 }
-
+                
                 status = [weakSelf.nativeAsset statusOfValueForKey:@"duration" error:&error];
-
+                
                 if (error != nil || status != AVKeyValueStatusLoaded) {
                     [weakSelf notifyAboutError:error];
                     return;

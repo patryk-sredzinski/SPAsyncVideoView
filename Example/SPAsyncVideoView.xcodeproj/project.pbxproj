@@ -20,7 +20,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		6006DDF82AF94D6500081F46 /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6006DDF72AF94D3D00081F46 /* test.mp4 */; };
+		601041DA2B6BDC24007733A7 /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 601041D92B6BDC24007733A7 /* test.mp4 */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		99F9352477830E46CFFD4C0A /* Pods_SPAsyncVideoView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */; };
 		CF73312B1D5FE5670089E0F2 /* 200w.gif in Resources */ = {isa = PBXBuildFile; fileRef = CF73312A1D5FE5670089E0F2 /* 200w.gif */; };
@@ -61,7 +61,7 @@
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
-		6006DDF72AF94D3D00081F46 /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = test.mp4; path = ../../../../Downloads/test.mp4; sourceTree = "<group>"; };
+		601041D92B6BDC24007733A7 /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6535C4E8E6461703EDF0CA4B /* SPAsyncVideoView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SPAsyncVideoView.podspec; path = ../SPAsyncVideoView.podspec; sourceTree = "<group>"; };
 		6F9C6647DD69B7AEFFEAA2E0 /* Pods_SPAsyncVideoView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPAsyncVideoView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,7 +158,7 @@
 				CF7FE6331D382008000822A5 /* SPViewCell.h */,
 				CF7FE6341D382008000822A5 /* SPViewCell.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
-				6006DDF72AF94D3D00081F46 /* test.mp4 */,
+				601041D92B6BDC24007733A7 /* test.mp4 */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
 			name = "Example for SPAsyncVideoView";
@@ -295,13 +295,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF7FE6381D38277A000822A5 /* big.mp4 in Resources */,
+				601041DA2B6BDC24007733A7 /* test.mp4 in Resources */,
 				CF73312B1D5FE5670089E0F2 /* 200w.gif in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				CF7FE6391D38277A000822A5 /* medium.mp4 in Resources */,
 				CF7FE6321D381DDA000822A5 /* small.mp4 in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				CFED40FD1D609959009A5DF1 /* 201w.gif in Resources */,
-				6006DDF82AF94D6500081F46 /* test.mp4 in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

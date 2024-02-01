@@ -139,8 +139,12 @@
 }
 
 - (void)resetToBegining {
-    NSValue *beginingTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutVideo.track.timeRange];
-    [self.nativeOutVideo resetForReadingTimeRanges:@[ beginingTimeRangeValue ]];
+    @try {
+        NSValue *beginingTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutVideo.track.timeRange];
+        [self.nativeOutVideo resetForReadingTimeRanges:@[ beginingTimeRangeValue ]];
+    } @catch (NSException *exception) {
+        NSLog(@"🟥 resetForReadingTimeRanges Exception: %@", exception);
+    }
 }
 
 - (CMSampleBufferRef)copyNextSampleBuffer {

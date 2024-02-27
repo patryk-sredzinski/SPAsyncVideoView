@@ -34,7 +34,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 
 @interface SPAsyncVideoView () <SPAsyncVideoReaderDelegate>
 
-@property (atomic, assign) BOOL canRenderAsset;
 @property (atomic, strong) dispatch_queue_t workingQueue;
 @property (nonatomic, strong) SPAsyncVideoReader *assetReader;
 @property (atomic, strong) AVSampleBufferDisplayLayer *displayLayer;
@@ -190,17 +189,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     self.actionAtItemEnd = SPAsyncVideoViewActionAtItemEndRepeat;
     self.videoGravity = SPAsyncVideoViewVideoGravityResizeAspectFill;
     self.autoPlay = YES;
-    self.canRenderAsset = [UIApplication sharedApplication].applicationState != UIApplicationStateBackground;
-    self.restartPlaybackOnEnteringForeground = YES;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
 }
 
 - (void)setupWithAsset:(SPAsyncVideoAsset *)asset {
@@ -282,11 +270,7 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
                 || displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
                 return;
             }
-
-            if (!weakSelf.canRenderAsset) {
-                return;
-            }
-
+            
             CMSampleBufferRef sampleBuffer = [assetReader copyNextSampleBuffer];
 
             if (sampleBuffer != NULL) {
@@ -353,20 +337,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     }
 }
 
-- (void)applicationDidEnterBackground:(NSNotification *)notificaiton {
-    self.canRenderAsset = NO;
-
-    [self stopVideo];
-}
-
-- (void)applicationWillEnterForeground:(NSNotification *)notification {
-    self.canRenderAsset = YES;
-
-    if (self.restartPlaybackOnEnteringForeground) {
-        [self forceRestart];
-    }
-}
-
 - (NSURL *)cachedMP4FileURLWithGifURL:(NSURL *)url {
     NSString *outputPath = NSTemporaryDirectory();
 
@@ -405,13 +375,6 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
         [self internalFlush];
         self.assetReader = nil;
     });
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidEnterBackgroundNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
-                                                  object:nil];
 }
 
 @end

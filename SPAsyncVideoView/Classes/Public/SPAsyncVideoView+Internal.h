@@ -49,7 +49,6 @@ IB_DESIGNABLE
 @property (nonatomic, assign) SPAsyncVideoViewVideoGravity videoGravity;
 @property (nonatomic, assign) SPAsyncVideoViewActionAtItemEnd actionAtItemEnd;
 @property (nonatomic, assign) IBInspectable BOOL autoPlay;
-@property (nonatomic, assign) IBInspectable BOOL restartPlaybackOnEnteringForeground;
 
 - (void)playVideo;
 - (void)stopVideo;

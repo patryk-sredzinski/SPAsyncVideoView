@@ -268,6 +268,8 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 
             if (!displayLayer.isReadyForMoreMediaData
                 || displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
+                [weakSelf notifyDelegateAboutError:displayLayer.error];
+                [weakSelf flushAndStopReading];
                 return;
             }
             
@@ -311,7 +313,11 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
                 case SPAsyncVideoViewActionAtItemEndRepeat: {
                     [displayLayer flush];
                     [weakSelf setCurrentControlTimebaseWithTime:CMTimeMake(0., 1.)];
-                    [assetReader resetToBegining];
+                    BOOL didReset = [assetReader resetToBegining];
+                    if (!didReset) {
+                        [weakSelf notifyDelegateAboutError:displayLayer.error];
+                        [weakSelf flushAndStopReading];
+                    }
                     break;
                 }
                 default:

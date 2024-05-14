@@ -138,12 +138,17 @@
     });
 }
 
-- (void)resetToBegining {
+- (BOOL)resetToBegining {
     @try {
-        NSValue *beginingTimeRangeValue = [NSValue valueWithCMTimeRange:self.nativeOutVideo.track.timeRange];
+        CMTimeRange timeRange = self.nativeOutVideo.track.timeRange;
+        if (!CMTIME_IS_NUMERIC(timeRange.start)) {
+            return NO;
+        }
+        NSValue *beginingTimeRangeValue = [NSValue valueWithCMTimeRange:timeRange];
         [self.nativeOutVideo resetForReadingTimeRanges:@[ beginingTimeRangeValue ]];
+        return YES;
     } @catch (NSException *exception) {
-        NSLog(@"🟥 resetForReadingTimeRanges Exception: %@", exception);
+        return NO;
     }
 }
 

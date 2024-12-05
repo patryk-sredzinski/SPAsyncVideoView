@@ -5,6 +5,8 @@
 //  Created by Sergey Pimenov on 26/10/2016.
 //
 //
+
+#import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
 
 @class SPAsyncVideoView;

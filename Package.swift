@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "SPAsyncVideoView",
     platforms: [
-        .iOS(.v8)
+        .iOS(.v12)
     ],
     products: [
         .library(
@@ -20,7 +20,9 @@ let package = Package(
             path: "SPAsyncVideoView/Classes",
             publicHeadersPath: "Public",
             cSettings: [
-                .headerSearchPath("Public")
+                .headerSearchPath("Public"),
+                .headerSearchPath("Private"),
+                .headerSearchPath("Private/GIF")
             ]
         )
     ]

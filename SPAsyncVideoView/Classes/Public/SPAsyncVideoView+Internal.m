@@ -259,13 +259,13 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     dispatch_async(readingQueue, ^{
         [weakSelf setCurrentControlTimebaseWithTime:CMTimeMake(0., 1.)];
         [weakSelf.displayLayer requestMediaDataWhenReadyOnQueue:readingQueue usingBlock:^{
-            AVSampleBufferDisplayLayer *displayLayer = weakSelf.displayLayer;
             SPAsyncVideoReader *assetReader = weakSelf.assetReader;
 
             if (![assetReader isReadyForMoreMediaData]) {
                 return;
             }
 
+            AVSampleBufferDisplayLayer *displayLayer = weakSelf.displayLayer;
             if (!displayLayer.isReadyForMoreMediaData
                 || displayLayer.status == AVQueuedSampleBufferRenderingStatusFailed) {
                 [weakSelf notifyDelegateAboutError:displayLayer.error];

@@ -131,7 +131,10 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
     self.displayLayer.frame = self.bounds;
+    [CATransaction commit];
 }
 
 #pragma mark - Private API

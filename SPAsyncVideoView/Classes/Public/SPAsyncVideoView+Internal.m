@@ -140,10 +140,10 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 #pragma mark - Private API
 
 - (void)setVideoVisible:(BOOL)isVisible {
-    if ([NSThread mainThread] == [NSThread currentThread]) {
+    if ([NSThread isMainThread]) {
         self.hidden = !isVisible;
     } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             self.hidden = !isVisible;
         });
     }
@@ -157,7 +157,15 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
     AVSampleBufferDisplayLayer *displayLayer = [self displayLayer];
 
     [displayLayer stopRequestingMediaData];
-    [displayLayer flushAndRemoveImage];
+    
+    // flushAndRemoveImage can trigger layout operations, so it must be called on the main thread
+    if ([NSThread isMainThread]) {
+        [displayLayer flushAndRemoveImage];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [displayLayer flushAndRemoveImage];
+        });
+    }
 
     if ([self.delegate respondsToSelector:@selector(asyncVideoViewDidFlush:)]) {
         [self.delegate asyncVideoViewDidFlush:self];
@@ -314,7 +322,10 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
                     break;
                 }
                 case SPAsyncVideoViewActionAtItemEndRepeat: {
-                    [displayLayer flush];
+                    // flush can trigger layout operations, dispatch to main thread
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [displayLayer flush];
+                    });
                     [weakSelf setCurrentControlTimebaseWithTime:CMTimeMake(0., 1.)];
                     BOOL didReset = [assetReader resetToBegining];
                     if (!didReset) {
@@ -331,13 +342,22 @@ NS_INLINE NSString * cachedFilePathWithGifURL(NSURL *gifURL) {
 }
 
 - (void)updateLayerTransformation:(SPAsyncVideoReader *)asyncVideoReader {
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [CATransaction setAnimationDuration:0];
-    [self.displayLayer setAffineTransform:asyncVideoReader.assetPrefferedTransform];
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-    [CATransaction commit];
+    CGAffineTransform transform = asyncVideoReader.assetPrefferedTransform;
+    void (^updateBlock)(void) = ^{
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+        [CATransaction setAnimationDuration:0];
+        [self.displayLayer setAffineTransform:transform];
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+        [CATransaction commit];
+    };
+    
+    if ([NSThread isMainThread]) {
+        updateBlock();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), updateBlock);
+    }
 }
 
 - (void)notifyDelegateAboutError:(nonnull NSError *)error {
